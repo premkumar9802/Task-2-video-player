@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Video Player</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    #video-container {
+        position: relative;
+    }
+    #custom-video {
+        width: 100%;
+    }
+    #gesture-right
+    {
+        position: absolute;
+        
+    }
+    #gesture-left
+    {
+        position: absolute;
+        
+    }
+    #gesture-middle {
+        position: absolute;
+        
+    }
+</style>
+</head>
+<body>
+<div id="video-container">
+        <video id="custom-video" controls playsinline>
+
+        <!-- Replace "path_to_video.mp4" with the actual URL or file path of your video -->
+        <source src="nature.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div id="gesture-right"></div>
+    <div id="gesture-left"></div>
+    <div id="gesture-middle"></div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let lastTapTime = 0;
+
+function handleDoubleTap(event) {
+  const currentTime = new Date().getTime();
+  const tapInterval = 300; // Adjust time window for double tap in milliseconds (ms)
+
+  if (currentTime - lastTapTime < tapInterval) {
+    // Double tap detected! Handle logic here (e.g., move video time)
+    if (event.target.id === 'gesture-right') {
+      video.currentTime += 10;
+    } else if (event.target.id === 'gesture-left') {
+      video.currentTime -= 10;
+    }
+  }
+  lastTapTime = currentTime;
+}
+
+rightGesture.addEventListener('touchend', handleDoubleTap);
+leftGesture.addEventListener('touchend', handleDoubleTap);
+
+        const video = document.getElementById('custom-video');
+        const rightGesture = document.getElementById('gesture-right');
+        const leftGesture = document.getElementById('gesture-left');
+        const middleGesture = document.getElementById('gesture-middle');
+        rightGesture.addEventListener('touchstart', handleDoubleTap);
+        leftGesture.addEventListener('touchstart', handleDoubleTap);
+        rightGesture.addEventListener('touchstart', function() {
+            video.currentTime += 10; // Move 10 seconds forward
+        });
+        
+        leftGesture.addEventListener('touchstart', function() {
+            video.currentTime -= 10; // Move 10 seconds backward
+        });
+        
+        middleGesture.addEventListener('touchstart', function() {
+            if (video.paused) {
+                video.play(); 
+                video.pause();
+            }
+        });
+    });
+</script>
+</body>
+</html>
+
